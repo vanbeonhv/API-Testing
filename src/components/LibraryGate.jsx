@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AddBook from "./AddBook";
 import LibraryManager from "./LibraryManager";
 
-const Gate = () => {
+const LibraryGate = () => {
   return (
     <BrowserRouter>
       <Routes>
@@ -14,4 +14,4 @@ const Gate = () => {
   );
 };
 
-export default Gate;
+export default LibraryGate;
