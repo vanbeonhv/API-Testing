@@ -5,21 +5,53 @@ import { useNavigate } from "react-router-dom";
 const LibraryManager = () => {
   const [books, setBooks] = useState([]);
   useEffect(() => {
-    axios
-      .get(
-        "https://my-json-server.typicode.com/codegym-vn/mock-api-books/books"
-      )
-      .then((res) => setBooks(res.data));
+    setTimeout(() => {
+      axios
+        .get(
+          "https://my-json-server.typicode.com/codegym-vn/mock-api-books/books"
+        )
+        .then((res) => setBooks(res.data));
+    }, 2000);
   }, [books]);
 
   const navigate = useNavigate();
   const handleAdd = () => {
     navigate("add");
   };
+
+  const handleEdit = (id) => {
+    navigate("edit");
+  };
+
+  const handleDelete = (id) => {
+    console.log(id);
+    axios
+      .get(
+        "https://my-json-server.typicode.com/codegym-vn/mock-api-books/books"
+      )
+      .then((res) => {
+        res.data.splice(id - 1, 1);
+        setBooks(res.data);
+      })
+      .catch((err) => {
+        throw err;
+      });
+
+    axios
+      .post(
+        "https://my-json-server.typicode.com/codegym-vn/mock-api-books/books",
+        books
+      )
+      .then(() => console.log("Deleted"))
+      .catch((err) => {
+        throw err;
+      });
+  };
+
   return (
     <div className="container vh-100">
-      <h1>Library</h1>
-      <table className="table position-relative mt-5">
+      <h1 className="">Library</h1>
+      <div className="position-relative">
         <button
           type="button"
           className="btn text-white position-absolute"
@@ -28,28 +60,40 @@ const LibraryManager = () => {
         >
           Add new Book
         </button>
-        <thead>
-          <tr>
-            <th scope="col">Title</th>
-            <th scope="col">Quantity</th>
-            <th scope="col" className="text-center">
-              Actions
-            </th>
-          </tr>
-        </thead>
-        <tbody className="table-group-divider">
-          {books.map((book) => (
-            <tr key={book.id}>
-              <td>{book.title}</td>
-              <td>{book.quantity}</td>
-              <td className="text-center">
-                <button className="btn btn-primary mx-1">Edit</button>
-                <button className="btn btn-danger mx-1">Delete</button>
-              </td>
+        <table className="table mt-5 ">
+          <thead>
+            <tr>
+              <th scope="col">Title</th>
+              <th scope="col">Quantity</th>
+              <th scope="col" className="text-center">
+                Actions
+              </th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody className="table-group-divider">
+            {books.map((book) => (
+              <tr key={book.id}>
+                <td>{book.title}</td>
+                <td>{book.quantity}</td>
+                <td className="text-center">
+                  <button
+                    className="btn btn-primary mx-1"
+                    onClick={() => handleEdit(book.id)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className="btn btn-danger mx-1"
+                    onClick={() => handleDelete(book.id)}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

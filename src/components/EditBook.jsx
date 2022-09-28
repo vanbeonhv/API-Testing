@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const AddBook = () => {
+const EditBook = () => {
   const [book, setBook] = useState({
     title: "",
     quantity: "",
@@ -17,7 +17,7 @@ const AddBook = () => {
       )
       .then((res) => {
         console.log(res.status);
-        alert("Add successfully!");
+        alert("Edit successfully!");
       })
       .catch((err) => {
         if (err.response) {
@@ -39,7 +39,7 @@ const AddBook = () => {
         className="position-absolute start-50 translate-middle"
         style={{ top: "25%" }}
       >
-        <h2 className="text-center mb-3">Add a new book</h2>
+        <h2 className="text-center mb-3">Edit a new book</h2>
         <form className="">
           <label htmlFor="title">Title</label>
           <br />
@@ -67,7 +67,7 @@ const AddBook = () => {
             onClick={handleClick}
             style={{ backgroundColor: "#009900" }}
           >
-            Add
+            Edit
           </button>
           <button
             type="button"
@@ -82,4 +82,4 @@ const AddBook = () => {
   );
 };
 
-export default AddBook;
+export default EditBook;
