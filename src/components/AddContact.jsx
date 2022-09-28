@@ -2,8 +2,8 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const AddBook = () => {
-  const [book, setBook] = useState({
+const AddContact = () => {
+  const [contacts, setContacts] = useState({
     title: "",
     quantity: "",
   });
@@ -12,9 +12,7 @@ const AddBook = () => {
   const handleClick = (e) => {
     e.preventDefault();
     axios
-      .post(
-        "https://my-json-server.typicode.com/codegym-vn/mock-api-books/books"
-      )
+      .post("http://localhost:3001/api/students", contacts)
       .then((res) => {
         console.log(res.status);
         alert("Add successfully!");
@@ -26,15 +24,15 @@ const AddBook = () => {
           console.log(err.headers);
         }
       });
-    setBook({
+    setContacts({
       title: "",
       quantity: "",
     });
   };
 
   const handleChange = (e) => {
-    setBook({ ...book, [e.target.name]: e.target.value });
-    console.log(book);
+    setContacts({ ...contacts, [e.target.name]: e.target.value });
+    console.log(contacts);
   };
   return (
     <div className="container">
@@ -42,7 +40,7 @@ const AddBook = () => {
         className="position-absolute start-50 translate-middle"
         style={{ top: "25%" }}
       >
-        <h2 className="text-center mb-3">Add a new book</h2>
+        <h2 className="text-center mb-3">Add Contact</h2>
         <form className="">
           <label htmlFor="title">Title</label>
           <br />
@@ -50,7 +48,7 @@ const AddBook = () => {
             type="text"
             name="title"
             className="my-2 border border-primary w-100"
-            value={book.title || ""}
+            value={contacts.title || ""}
             onChange={handleChange}
           />
           <br />
@@ -60,7 +58,7 @@ const AddBook = () => {
             type="number"
             name="quantity"
             className="my-2 border border-primary w-100"
-            value={book.quantity || ""}
+            value={contacts.quantity || ""}
             onChange={handleChange}
           />
           <br />
@@ -85,4 +83,4 @@ const AddBook = () => {
   );
 };
 
-export default AddBook;
+export default AddContact;

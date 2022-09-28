@@ -5,7 +5,8 @@ import "./index.css";
 import App from "./App";
 import Article from "./pages/Article";
 import ToDoList from "./components/ToDoList";
-import Gate from "./components/Gate";
+import LibraryGate from "./components/LibraryGate";
+import ContactGate from "./components/ContactGate";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<Gate />);
+root.render(<ContactGate />);
