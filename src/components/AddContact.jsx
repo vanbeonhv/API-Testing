@@ -5,14 +5,31 @@ import { useNavigate } from "react-router-dom";
 const AddContact = () => {
   const [contacts, setContacts] = useState({
     title: "",
-    quantity: "",
+    phone: "",
   });
   const navigate = useNavigate();
+  const [selectedFile, setSelectedFile] = useState();
+
+  const handleFileUpload = (e) => {
+    setSelectedFile(e.target.files[0]);
+    console.log(e.target.file[0]);
+    // const fd = new FormData();
+    // // Tạo data để gửi lên server
+    // fd.append("file", selectedFile);
+    // axios
+    //   .post("https://v2.convertapi.com/upload", fd)
+    //   .then((res) => {
+    //     console.log(res.data.Url);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+  };
 
   const handleClick = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:3001/api/students", contacts)
+      .post("http://localhost:3001/api/users", contacts)
       .then((res) => {
         console.log(res.status);
         alert("Add successfully!");
@@ -26,7 +43,7 @@ const AddContact = () => {
       });
     setContacts({
       title: "",
-      quantity: "",
+      phone: "",
     });
   };
 
@@ -35,30 +52,61 @@ const AddContact = () => {
     console.log(contacts);
   };
   return (
-    <div className="container">
+    <div className="container vh-100 position-relative">
       <div
-        className="position-absolute start-50 translate-middle"
-        style={{ top: "25%" }}
+        className="position-absolute start-50 translate-middle w-25"
+        style={{ top: "50%" }}
       >
         <h2 className="text-center mb-3">Add Contact</h2>
+        <div className="position-relative align-middle">
+          <div
+            className="rounded-circle bg-secondary"
+            style={{ height: "70px", width: "70px" }}
+          >
+            <img src="" />
+          </div>
+          <div>
+            <input
+              // ref="fileInput"
+              onChange={handleFileUpload}
+              type="file"
+              style={{ display: "none" }}
+              // multiple={false}
+            />
+            <button className="btn btn-primary position-absolute top-50 end-0 translate-middle-y">
+              Change image
+            </button>
+          </div>
+        </div>
         <form className="">
-          <label htmlFor="title">Title</label>
+          <label htmlFor="name">Name</label>
           <br />
           <input
+            autoFocus
             type="text"
-            name="title"
+            name="name"
             className="my-2 border border-primary w-100"
-            value={contacts.title || ""}
+            value={contacts.name || ""}
             onChange={handleChange}
           />
           <br />
-          <label htmlFor="quantity">Quantity</label>
+          <label htmlFor="email">Email</label>
+          <br />
+          <input
+            type="email"
+            name="email"
+            className="my-2 border border-primary w-100"
+            value={contacts.email || ""}
+            onChange={handleChange}
+          />
+          <br />
+          <label htmlFor="phone">Phone</label>
           <br />
           <input
             type="number"
-            name="quantity"
+            name="phone"
             className="my-2 border border-primary w-100"
-            value={contacts.quantity || ""}
+            value={contacts.phone || ""}
             onChange={handleChange}
           />
           <br />

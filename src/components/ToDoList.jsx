@@ -38,7 +38,10 @@ const ToDoList = () => {
   const handleClick = () => {
     axios
       .post("https://jsonplaceholder.typicode.com/todos", list)
-      .then(() => alert(`add successfully!`));
+      .then((res) => {
+        console.log(res.status);
+        alert(`add successfully!`);
+      });
   };
 
   return (

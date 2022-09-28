@@ -8,7 +8,7 @@ const ContactManager = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/api/students", {
+      .get("http://localhost:3001/api/users", {
         params: {
           _start: 15,
           _limit: 10,
@@ -24,10 +24,12 @@ const ContactManager = () => {
     navigate("/add");
   };
 
-  const handleEdit = () => {};
+  const handleEdit = (id) => {
+    navigate("/edit/" + id);
+  };
 
   const handleDelete = (id) => {
-    axios.delete("http://localhost:3001/api/students/id").then((res) => {
+    axios.delete("http://localhost:3001/api/users/" + id).then((res) => {
       if (res.status === 200) {
         let newContactList = contacts.filter((contact) => contact.id !== id);
         setContacts(newContactList);
@@ -48,8 +50,9 @@ const ContactManager = () => {
       <table className="table position-relative mt-5">
         <thead>
           <tr>
-            <th scope="col">Title</th>
-            <th scope="col">Quantity</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone</th>
             <th scope="col" className="text-center">
               Actions
             </th>
@@ -57,11 +60,22 @@ const ContactManager = () => {
         </thead>
         <tbody className="table-group-divider">
           {contacts.map((contact) => (
-            <tr key={contact.id}>
-              <td>{contact.title}</td>
-              <td>{contact.quantity}</td>
-              <td className="text-center">
-                <button className="btn btn-primary mx-1" onClick={handleEdit}>
+            <tr key={contact.id} className="align-middle">
+              <td className=" ">
+                <img
+                  src={contact.avatar}
+                  alt="avatar"
+                  className="rounded-circle bg-secondary me-2"
+                />
+                {contact.name}
+              </td>
+              <td>{contact.email}</td>
+              <td>{contact.phone}</td>
+              <td className="text-center " style={{ minWidth: "170px" }}>
+                <button
+                  className="btn btn-primary mx-1"
+                  onClick={() => handleEdit(contact.id)}
+                >
                   Edit
                 </button>
                 <button
