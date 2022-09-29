@@ -7,6 +7,7 @@ import Article from "./pages/Article";
 import ToDoList from "./components/ToDoList";
 import LibraryGate from "./components/LibraryGate";
 import ContactGate from "./components/ContactGate";
+import Login from "./components/Login";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<ContactGate />);
+root.render(<Login />);

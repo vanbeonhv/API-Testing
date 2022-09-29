@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const AddContact = () => {
@@ -10,16 +10,28 @@ const AddContact = () => {
   const navigate = useNavigate();
   const [selectedFile, setSelectedFile] = useState();
 
+  useEffect(() => {
+    return () => {
+      selectedFile && URL.revokeObjectURL(selectedFile.preview);
+    };
+  }, [selectedFile]);
+
   const handleFileUpload = (e) => {
-    setSelectedFile(e.target.files[0]);
-    console.log(e.target.file[0]);
+    // setSelectedFile(e.target.files[0]);
+    const file = e.target.files[0];
+    file.preview = URL.createObjectURL(file);
+    setSelectedFile(file);
+    console.log(URL.createObjectURL(file));
+    console.log(URL.createObjectURL(selectedFile));
     // const fd = new FormData();
     // // Tạo data để gửi lên server
     // fd.append("file", selectedFile);
     // axios
-    //   .post("https://v2.convertapi.com/upload", fd)
+    //   .post("https://v2.convertapi.com/upload/", fd)
     //   .then((res) => {
+    //     console.log(res.status);
     //     console.log(res.data.Url);
+    //     setContacts({ ...contacts, avatar: res.data.Url });
     //   })
     //   .catch((err) => {
     //     console.log(err);
@@ -60,10 +72,16 @@ const AddContact = () => {
         <h2 className="text-center mb-3">Add Contact</h2>
         <div className="position-relative align-middle">
           <div
-            className="rounded-circle bg-secondary"
+            className="rounded-circle bg-secondary overflow-hidden"
             style={{ height: "70px", width: "70px" }}
           >
-            <img src="" />
+            {selectedFile && (
+              <img
+                src={selectedFile.preview}
+                className=""
+                style={{ objectFit: "cover", width: "100%", height: "100%" }}
+              />
+            )}
           </div>
           <div>
             <input
@@ -71,9 +89,14 @@ const AddContact = () => {
               onChange={handleFileUpload}
               type="file"
               style={{ display: "none" }}
-              // multiple={false}
+              multiple={false}
+              id="my-file"
             />
-            <button className="btn btn-primary position-absolute top-50 end-0 translate-middle-y">
+            <button
+              className="btn btn-primary position-absolute top-50 end-0 translate-middle-y"
+              type="button"
+              onClick={() => document.getElementById("my-file").click()}
+            >
               Change image
             </button>
           </div>
