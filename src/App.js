@@ -1,17 +1,26 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import UserDetails from "./pages/UserDetails";
-import Users from "./pages/Users";
+import store from "./components/ReduxToolkit/store";
+import { Provider } from "react-redux";
+import CounterFeature from "./components/ReduxToolkit";
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Users />} />
-        <Route path="/user/add" element={<UserDetails />} />
-        <Route path="/user/:userId" element={<UserDetails />} />
-      </Routes>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<CounterFeature />} />
+        </Routes>
+      </BrowserRouter>
+    </Provider>
+
+    //     <BrowserRouter>
+    //   <Routes>
+    //     <Route path="/" element={<Login />} />
+    //     <Route path="/user/add" element={<UserDetails />} />
+    //     <Route path="/user/:userId" element={<UserDetails />} />
+    //   </Routes>
+    // </BrowserRouter>
   );
 };
 
