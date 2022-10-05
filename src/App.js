@@ -1,8 +1,8 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import store from "./components/ReduxToolkit/store";
+import store from "./components/ReduxToolkit/Counter/store";
 import { Provider } from "react-redux";
-import CounterFeature from "./components/ReduxToolkit";
+import CounterFeature from "./components/ReduxToolkit/Counter";
 
 const App = () => {
   return (
