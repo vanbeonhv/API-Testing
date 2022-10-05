@@ -19,12 +19,13 @@ const postsSlice = createSlice({
   },
   reducers: {
     add: (state, action) => {
-      state.push(action.payload);
+      // state.postsList.push(action.payload);
+      axios.post("http://localhost:3001/api/posts", action.payload);
+    },
+    del: (state, action) => {
+      axios.delete("http://localhost:3001/api/posts/" + action.payload);
     },
     // edit: (state, action) => {},
-    // delete: (state, action) => {
-    //   state;
-    // },
   },
   extraReducers: {
     [getPosts.pending]: (state, action) => {
@@ -42,5 +43,5 @@ const postsSlice = createSlice({
 });
 
 const { actions, reducer } = postsSlice;
-export const { add } = actions;
+export const { add, del } = actions;
 export default reducer;
