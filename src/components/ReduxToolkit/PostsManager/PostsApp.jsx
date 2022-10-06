@@ -7,7 +7,7 @@ const PostsApp = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const posts = useSelector((state) => state.posts.postsList);
-  console.log(posts);
+  // console.log(posts);
   useEffect(() => {
     dispatch(getPosts());
   }, []);

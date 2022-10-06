@@ -35,18 +35,22 @@ const postsSlice = createSlice({
         });
     },
     del: (state, action) => {
-      axios
-        .delete("http://localhost:3001/api/posts/" + action.payload)
-        .then((res) => {
-          if (res.status === 200) {
-            console.log("Delete successfully!");
-          } else {
-            console.log("Status: " + res.status);
-          }
-        })
-        .catch((err) => {
-          throw err;
-        });
+      state.postsList = state.postsList.filter(
+        (post) => post.id !== action.payload
+      );
+      console.log(action.payload);
+      // axios
+      //   .delete("http://localhost:3001/api/posts/" + action.payload)
+      //   .then((res) => {
+      //     if (res.status === 200) {
+      //       console.log("Delete successfully!");
+      //     } else {
+      //       console.log("Status: " + res.status);
+      //     }
+      //   })
+      //   .catch((err) => {
+      //     throw err;
+      //   });
     },
     edit: (state, action) => {
       console.log(action.payload);
@@ -75,7 +79,6 @@ const postsSlice = createSlice({
     [getPosts.fulfilled]: (state, action) => {
       state.status = "success";
       state.postsList = action.payload;
-      // return state;
     },
     [getPosts.rejected]: (state, action) => {
       state.status = "failed";
