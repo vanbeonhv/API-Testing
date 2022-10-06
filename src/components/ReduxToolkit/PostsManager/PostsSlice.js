@@ -20,12 +20,53 @@ const postsSlice = createSlice({
   reducers: {
     add: (state, action) => {
       // state.postsList.push(action.payload);
-      axios.post("http://localhost:3001/api/posts", action.payload);
+      axios
+        .post("http://localhost:3001/api/posts", action.payload)
+        .then((res) => {
+          if (res.status === 201) {
+            window.confirm("Add successfully!");
+            window.location = "/";
+          } else {
+            console.log("Status: " + res.status);
+          }
+        })
+        .catch((err) => {
+          throw err;
+        });
     },
     del: (state, action) => {
-      axios.delete("http://localhost:3001/api/posts/" + action.payload);
+      axios
+        .delete("http://localhost:3001/api/posts/" + action.payload)
+        .then((res) => {
+          if (res.status === 200) {
+            console.log("Delete successfully!");
+          } else {
+            console.log("Status: " + res.status);
+          }
+        })
+        .catch((err) => {
+          throw err;
+        });
     },
-    // edit: (state, action) => {},
+    edit: (state, action) => {
+      console.log(action.payload);
+      axios
+        .put(
+          "http://localhost:3001/api/posts/" + action.payload.id,
+          action.payload
+        )
+        .then((res) => {
+          if (res.status === 200) {
+            alert("Edit successfully!");
+            window.location = "/";
+          } else {
+            console.log("Status: " + res.status);
+          }
+        })
+        .catch((err) => {
+          throw err;
+        });
+    },
   },
   extraReducers: {
     [getPosts.pending]: (state, action) => {
@@ -43,5 +84,5 @@ const postsSlice = createSlice({
 });
 
 const { actions, reducer } = postsSlice;
-export const { add, del } = actions;
+export const { add, del, edit } = actions;
 export default reducer;
